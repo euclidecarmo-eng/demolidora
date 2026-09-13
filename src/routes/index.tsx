@@ -253,23 +253,24 @@ function QuoteWizard() {
   if (!hydrated) return <div className="min-h-screen bg-background" />;
 
   return (
-    <div className="min-h-screen bg-background pb-24 text-foreground">
-      <header className="border-t-4 border-brand bg-secondary text-secondary-foreground">
-        <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-2.5">
-          <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-card p-1 shadow-sm">
+    <div className="min-h-screen bg-primary pb-24 text-foreground sm:py-6">
+      <div className="mx-auto min-h-screen max-w-2xl overflow-hidden bg-background shadow-2xl sm:min-h-[calc(100vh-3rem)] sm:rounded-3xl">
+      <header className="border-t-4 border-brand bg-background text-foreground">
+        <div className="flex items-center gap-3 px-4 py-3 sm:px-6">
+          <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-foreground p-1 shadow-sm">
             <img src={brandLogo.url} alt="Logomarca DemolidoraSmart" width={56} height={56} className="size-14 object-contain" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="font-display text-lg font-extrabold leading-tight">DemolidoraSmart</p>
             <p className="text-xs font-semibold text-primary">Obra no prazo. Sem improviso.</p>
           </div>
-          <span className="hidden rounded border border-secondary-foreground/20 px-2 py-1 text-xs font-semibold sm:block">ORÇAMENTO RÁPIDO</span>
+           <span className="hidden rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold sm:block">ORÇAMENTO RÁPIDO</span>
         </div>
       </header>
 
       {!sent && <Progress step={step} />}
 
-      <main className="mx-auto max-w-2xl px-4 py-6">
+       <main className="px-4 py-6 sm:px-6">
         {sent ? (
           <section className="animate-step py-12 text-center" aria-live="polite">
             <span className="mx-auto flex size-20 items-center justify-center rounded-full bg-primary text-primary-foreground"><CheckCircle2 className="size-11" /></span>
@@ -299,28 +300,29 @@ function QuoteWizard() {
         )}
       </main>
 
-      <TrustBar />
+       </div>
+       <TrustBar />
     </div>
   );
 }
 
 function Progress({ step }: { step: number }) {
   return (
-    <div className="border-b border-border bg-card">
-      <div className="mx-auto max-w-2xl px-4 py-3">
+    <div className="border-y border-border bg-background">
+      <div className="px-4 py-3 sm:px-6">
         <div className="flex items-center justify-between text-xs font-bold"><span>ETAPA {step} DE 4</span><span className="text-muted-foreground">Menos de 2 minutos</span></div>
-        <div className="mt-2 grid grid-cols-4 gap-1" aria-label={`Etapa ${step} de 4`}>{[1, 2, 3, 4].map((item) => <span key={item} className={`h-1.5 rounded-sm ${item <= step ? "bg-primary" : "bg-muted"}`} />)}</div>
+        <div className="mt-2 grid grid-cols-4 gap-1.5" aria-label={`Etapa ${step} de 4`}>{[1, 2, 3, 4].map((item) => <span key={item} className={`h-1.5 rounded-full ${item <= step ? "bg-primary" : "bg-muted"}`} />)}</div>
       </div>
     </div>
   );
 }
 
 function StepHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) {
-  return <div className="mb-6"><p className="text-xs font-bold uppercase text-brand">{eyebrow}</p><h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{title}</h1><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>;
+  return <div className="mb-6"><p className="text-xs font-extrabold uppercase text-brand">{eyebrow}</p><h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{title}</h1><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>;
 }
 
 function ServiceStep({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  return <><StepHeading eyebrow="Tipo de serviço" title="O que sua obra precisa?" text="Selecione uma opção para iniciar o orçamento." /><div className="grid grid-cols-2 gap-3">{services.map(({ label, icon: Icon }) => { const active = value === label; return <button key={label} type="button" onClick={() => onChange(label)} aria-pressed={active} className={`relative flex min-h-32 flex-col items-start justify-between rounded-md border-2 p-4 text-left transition ${active ? "border-brand bg-brand-soft shadow-sm" : "border-border bg-card hover:border-brand/60"}`}><Icon className={`size-7 ${active ? "text-brand" : "text-secondary"}`} /><span className="mt-4 text-sm font-bold leading-tight">{label}</span>{active && <span className="absolute right-3 top-3 flex size-6 items-center justify-center rounded-full bg-brand text-brand-foreground"><Check className="size-4" /></span>}</button>; })}</div></>;
+  return <><StepHeading eyebrow="Tipo de serviço" title="O que sua obra precisa?" text="Selecione uma opção para iniciar o orçamento." /><div className="grid grid-cols-2 gap-3">{services.map(({ label, icon: Icon }) => { const active = value === label; return <button key={label} type="button" onClick={() => onChange(label)} aria-pressed={active} className={`relative flex min-h-32 flex-col items-start justify-between rounded-2xl border p-3 text-left transition active:scale-[0.98] sm:p-4 ${active ? "border-primary bg-card shadow-[0_0_0_1px_var(--primary)]" : "border-border bg-card hover:border-primary/60"}`}><span className={`flex size-11 items-center justify-center rounded-xl ${active ? "bg-primary text-primary-foreground" : "bg-background text-primary"}`}><Icon className="size-6" /></span><span className="mt-4 pr-5 text-sm font-bold leading-tight">{label}</span>{active && <span className="absolute right-3 top-3 flex size-6 items-center justify-center rounded-full bg-brand text-brand-foreground"><Check className="size-4" /></span>}</button>; })}</div></>;
 }
 
 function DetailsStep({ form, update, locate, locating, locationError }: { form: FormData; update: (field: keyof FormData, value: string) => void; locate: () => void; locating: boolean; locationError: string }) {
@@ -339,5 +341,5 @@ function ReviewStep({ form, files, estimate, edit, submitting, uploadProgress, s
 }
 
 function TrustBar() {
-  return <footer className="fixed inset-x-0 bottom-0 z-20 border-t border-secondary-foreground/10 bg-secondary text-secondary-foreground shadow-lg"><div className="mx-auto grid min-h-16 max-w-2xl grid-cols-3 divide-x divide-secondary-foreground/15 px-2"><div className="flex flex-col items-center justify-center text-center"><strong className="text-sm text-primary">15+ anos</strong><span className="text-[10px]">de obra</span></div><div className="flex flex-col items-center justify-center text-center"><strong className="text-sm text-primary">800+ projetos</strong><span className="text-[10px]">entregues</span></div><div className="flex flex-col items-center justify-center text-center"><strong className="text-sm text-primary">Frota própria</strong><span className="text-[10px]">CAT / Volvo</span></div></div></footer>;
+  return <footer className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-background text-foreground shadow-lg"><div className="mx-auto grid min-h-16 max-w-2xl grid-cols-3 divide-x divide-border px-2"><div className="flex flex-col items-center justify-center text-center"><strong className="text-sm text-primary">15+ anos</strong><span className="text-[10px] text-muted-foreground">de obra</span></div><div className="flex flex-col items-center justify-center text-center"><strong className="text-sm text-primary">800+ projetos</strong><span className="text-[10px] text-muted-foreground">entregues</span></div><div className="flex flex-col items-center justify-center text-center"><strong className="text-sm text-primary">Frota própria</strong><span className="text-[10px] text-muted-foreground">CAT / Volvo</span></div></div></footer>;
 }
