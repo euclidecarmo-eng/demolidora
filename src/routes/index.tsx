@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import appIcon from "../../public/demolidorasmart-icon.png";
+import brandLogo from "@/assets/demolidorasmart-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -254,9 +254,11 @@ function QuoteWizard() {
 
   return (
     <div className="min-h-screen bg-background pb-24 text-foreground">
-      <header className="bg-secondary text-secondary-foreground">
-        <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-3">
-          <img src={appIcon} alt="Símbolo DemolidoraSmart" width={48} height={48} className="size-12 rounded-md object-cover" />
+      <header className="border-t-4 border-brand bg-secondary text-secondary-foreground">
+        <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-2.5">
+          <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-card p-1 shadow-sm">
+            <img src={brandLogo.url} alt="Logomarca DemolidoraSmart" width={56} height={56} className="size-14 object-contain" />
+          </div>
           <div className="min-w-0 flex-1">
             <p className="font-display text-lg font-extrabold leading-tight">DemolidoraSmart</p>
             <p className="text-xs font-semibold text-primary">Obra no prazo. Sem improviso.</p>
@@ -314,11 +316,11 @@ function Progress({ step }: { step: number }) {
 }
 
 function StepHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) {
-  return <div className="mb-6"><p className="text-xs font-bold uppercase text-primary">{eyebrow}</p><h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{title}</h1><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>;
+  return <div className="mb-6"><p className="text-xs font-bold uppercase text-brand">{eyebrow}</p><h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{title}</h1><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>;
 }
 
 function ServiceStep({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  return <><StepHeading eyebrow="Tipo de serviço" title="O que sua obra precisa?" text="Selecione uma opção para iniciar o orçamento." /><div className="grid grid-cols-2 gap-3">{services.map(({ label, icon: Icon }) => { const active = value === label; return <button key={label} type="button" onClick={() => onChange(label)} aria-pressed={active} className={`relative flex min-h-32 flex-col items-start justify-between rounded-md border-2 p-4 text-left transition ${active ? "border-primary bg-accent shadow-sm" : "border-border bg-card hover:border-primary/60"}`}><Icon className={`size-7 ${active ? "text-primary" : "text-secondary"}`} /><span className="mt-4 text-sm font-bold leading-tight">{label}</span>{active && <span className="absolute right-3 top-3 flex size-6 items-center justify-center rounded-full bg-primary text-primary-foreground"><Check className="size-4" /></span>}</button>; })}</div></>;
+  return <><StepHeading eyebrow="Tipo de serviço" title="O que sua obra precisa?" text="Selecione uma opção para iniciar o orçamento." /><div className="grid grid-cols-2 gap-3">{services.map(({ label, icon: Icon }) => { const active = value === label; return <button key={label} type="button" onClick={() => onChange(label)} aria-pressed={active} className={`relative flex min-h-32 flex-col items-start justify-between rounded-md border-2 p-4 text-left transition ${active ? "border-brand bg-brand-soft shadow-sm" : "border-border bg-card hover:border-brand/60"}`}><Icon className={`size-7 ${active ? "text-brand" : "text-secondary"}`} /><span className="mt-4 text-sm font-bold leading-tight">{label}</span>{active && <span className="absolute right-3 top-3 flex size-6 items-center justify-center rounded-full bg-brand text-brand-foreground"><Check className="size-4" /></span>}</button>; })}</div></>;
 }
 
 function DetailsStep({ form, update, locate, locating, locationError }: { form: FormData; update: (field: keyof FormData, value: string) => void; locate: () => void; locating: boolean; locationError: string }) {
